@@ -1,5 +1,9 @@
 # Joystream Substrate UI
 
+## Requirements
+
+This project uses **yarn** as Node package manager.
+
 ## Install deps
 
 ```bash
