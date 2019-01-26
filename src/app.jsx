@@ -16,6 +16,7 @@ import {WalletList, SecretItem} from './WalletList';
 import {AddressBookList} from './AddressBookList';
 import {TransformBondButton} from './TransformBondButton';
 import {Pretty} from './Pretty';
+import {registerJoystreamTypes} from './joystream-types';
 
 export class App extends ReactiveComponent {
 	constructor () {
@@ -39,6 +40,8 @@ export class App extends ReactiveComponent {
 		this.seedAccount = this.seed.map(s => s ? secretStore().accountFromPhrase(s) : undefined)
 		this.seedAccount.use()
 		this.runtime = new Bond;
+
+		registerJoystreamTypes();
 	}
 
 	readyRender() {
