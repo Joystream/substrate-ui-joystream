@@ -36,7 +36,7 @@ export const JoystreamTypes = {
         rejections: 'u32',
         slashes: 'u32',
         status: 'ProposalStatus',
-        finalized_on: 'BlockNumber',
+        finalized_at: 'BlockNumber',
     },
 };
 
