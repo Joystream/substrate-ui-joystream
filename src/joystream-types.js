@@ -18,7 +18,7 @@ export const JoystreamTypes = {
         name: 'Vec<u8>',
         description: 'Vec<u8>',
         wasm_code: 'Vec<u8>',
-        proposed_on: 'BlockNumber',
+        proposed_at: 'BlockNumber',
         status: 'ProposalStatus',
     },
     VoteKind: {

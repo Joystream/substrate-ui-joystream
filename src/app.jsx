@@ -3,8 +3,8 @@ require('semantic-ui-css/semantic.min.css');
 const { generateMnemonic } = require('bip39')
 import {Icon, List, Label, Header, Segment, Divider, Button} from 'semantic-ui-react';
 import {Bond, TransformBond} from 'oo7';
-import {ReactiveComponent, If, Rspan} from 'oo7-react';
-import {calls, runtime, chain, system, runtimeUp, ss58Encode, addressBook, secretStore} from 'oo7-substrate';
+import {ReactiveComponent, If, Rdiv, Rspan} from 'oo7-react';
+import {calls, runtime, chain, system, runtimeUp, initRuntime, ss58Encode, addressBook, secretStore} from 'oo7-substrate';
 import Identicon from 'polkadot-identicon';
 import {AccountIdBond, SignerBond} from './AccountIdBond.jsx';
 import {BalanceBond} from './BalanceBond.jsx';
@@ -16,7 +16,10 @@ import {WalletList, SecretItem} from './WalletList';
 import {AddressBookList} from './AddressBookList';
 import {TransformBondButton} from './TransformBondButton';
 import {Pretty} from './Pretty';
+
 import {registerJoystreamTypes} from './joystream-types';
+import {Menu} from './Menu';
+import {Proposals} from './Proposals';
 
 export class App extends ReactiveComponent {
 	constructor () {
@@ -45,8 +48,12 @@ export class App extends ReactiveComponent {
 	}
 
 	readyRender() {
-		return (<div>
+		return (
+	<div>
+		<Menu />
+		<div className="ui main text container" style={{ marginTop: '5rem' }}>
 			<div>
+				{/* TODO move this info to menu */}
 				<Label>Name <Label.Detail>
 					<Pretty className="value" value={system.name}/> v<Pretty className="value" value={system.version}/>
 				</Label.Detail></Label>
@@ -67,6 +74,18 @@ export class App extends ReactiveComponent {
 					}</Rspan>
 				</Label.Detail></Label>
 			</div>
+		
+			<Segment style={{margin: '1em'}}>
+				<Header as='h2'>
+					<Icon name='cogs' />
+					<Header.Content>
+						Runtime Upgrade Proposals 
+						<Rspan> ({runtime.proposals.nextProposalId})</Rspan>
+					</Header.Content>
+				</Header>
+				<Proposals style={{paddingBottom: '1em'}} />
+			</Segment>
+
 			<Segment style={{margin: '1em'}}>
 				<Header as='h2'>
 					<Icon name='key' />
@@ -105,7 +124,7 @@ export class App extends ReactiveComponent {
 					<WalletList/>
 				</div>
 			</Segment>
-			<Divider hidden />
+			
 			<Segment style={{margin: '1em'}} padded>
 				<Header as='h2'>
 					<Icon name='search' />
@@ -153,7 +172,7 @@ export class App extends ReactiveComponent {
 					<AddressBookList/>
 				</div>
 			</Segment>
-			<Divider hidden />
+			
 			<Segment style={{margin: '1em'}} padded>
 				<Header as='h2'>
 					<Icon name='send' />
@@ -202,7 +221,7 @@ export class App extends ReactiveComponent {
 					}}
 				/>
 			</Segment>
-			<Divider hidden />
+			
 			<Segment style={{margin: '1em'}} padded>
 				<Header as='h2'>
 					<Icon name='search' />
@@ -222,7 +241,8 @@ export class App extends ReactiveComponent {
 					}}
 				/>
 			</Segment>
-		</div>);
+		</div>
+	</div>);
 	}
 }
 
