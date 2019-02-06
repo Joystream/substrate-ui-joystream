@@ -21,6 +21,46 @@ export function shortAddr(addr) {
         + addr.substring(addr.length - 4)
 }
 
+export function vecu8ToStr(vecu8) {
+	return hexToStr(bytesToHex(vecu8))
+}
+
+export const isDefined = (x) =>
+  !notDefined(x)
+
+export const isDef = isDefined
+
+export const notDefined = (x) =>
+  x === null || typeof x === 'undefined'
+
+export const notDef = notDefined
+
+export const isObj = (x) =>
+  x !== null && typeof x === 'object'
+
+export const isStr = (x) =>
+  typeof x === 'string'
+
+export const isNum = (x) =>
+  typeof x === 'number'
+
+export const isEmptyStr = (x) =>
+  notDefined(x) || isStr(x) && x.trim().length === 0
+
+export const nonEmptyStr = (x) =>
+  isStr(x) && x.trim().length > 0
+
+export const parseNumStr = (num) => {
+    try { 
+        return parseInt(num)
+    } catch (err) {
+        return undefined
+    }
+}
+
+export const nonEmptyArr = (x) =>
+  Array.isArray(x) && x.length > 0
+
 // For debug only:
 window.strToHex = strToHex
 window.hexToStr = hexToStr

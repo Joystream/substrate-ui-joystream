@@ -35,6 +35,7 @@ export class FileUploadBond extends ReactiveComponent {
 				disabled={this.state.disabled}
 				as="label"
 				htmlFor={this.id}
+				icon="file alternate outline"
 				label={this.state.length
 					? `${this.state.length} bytes`
 					: null

@@ -19,7 +19,7 @@ import {Pretty} from './Pretty';
 
 import {registerJoystreamTypes} from './joystream-types';
 import {Menu} from './Menu';
-import {Proposals} from './Proposals';
+import {Proposals, NewProposal} from './Proposals';
 
 export class App extends ReactiveComponent {
 	constructor () {
@@ -51,7 +51,7 @@ export class App extends ReactiveComponent {
 		return (
 	<div>
 		<Menu />
-		<div className="ui main text container" style={{ marginTop: '5rem' }}>
+		<div className="ui main text container" style={{ margin: '4rem 0' }}>
 			<div>
 				{/* TODO move this info to menu */}
 				<Label>Name <Label.Detail>
@@ -75,154 +75,167 @@ export class App extends ReactiveComponent {
 				</Label.Detail></Label>
 			</div>
 		
-			<Segment style={{margin: '1em'}}>
+			<div style={{marginTop: '3rem'}}>
 				<Header as='h2'>
 					<Icon name='cogs' />
 					<Header.Content>
-						Runtime Upgrade Proposals 
-						<Rspan> ({runtime.proposals.nextProposalId})</Rspan>
+						New Proposal
 					</Header.Content>
 				</Header>
-				<Proposals style={{paddingBottom: '1em'}} />
-			</Segment>
+				<Segment style={{backgroundColor: '#fafafa'}}>
+					<NewProposal/>
+				</Segment>
+			</div>
 
-			<Segment style={{margin: '1em'}}>
+			<div style={{marginTop: '3rem'}}>
 				<Header as='h2'>
-					<Icon name='key' />
+					<Icon name='cogs' />
 					<Header.Content>
-						Wallet
-						<Header.Subheader>Manage your secret keys</Header.Subheader>
+						Existing Proposals 
+						<Rspan> ({runtime.proposals.proposalCount})</Rspan>
 					</Header.Content>
 				</Header>
-				<div style={{paddingBottom: '1em'}}>
-					<div style={{fontSize: 'small'}}>seed</div>
-					<InputBond
-						bond={this.seed}
-						reversible
-						placeholder='Some seed for this key'
-						validator={n => n || null}
-						action={<Button content="Another" onClick={() => this.seed.trigger(generateMnemonic())} />}
-						iconPosition='left'
-						icon={<i style={{opacity: 1}} className='icon'><Identicon account={this.seedAccount} size={28} style={{marginTop: '5px'}}/></i>}
+				<Proposals/>
+			</div>
+
+			{ false ? null : <div style={{marginTop: '1rem'}}>
+				<Segment>
+					<Header as='h2'>
+						<Icon name='key' />
+						<Header.Content>
+							Wallet
+							<Header.Subheader>Manage your secret keys</Header.Subheader>
+						</Header.Content>
+					</Header>
+					<div style={{paddingBottom: '1em'}}>
+						<div style={{fontSize: 'small'}}>seed</div>
+						<InputBond
+							bond={this.seed}
+							reversible
+							placeholder='Some seed for this key'
+							validator={n => n || null}
+							action={<Button content="Another" onClick={() => this.seed.trigger(generateMnemonic())} />}
+							iconPosition='left'
+							icon={<i style={{opacity: 1}} className='icon'><Identicon account={this.seedAccount} size={28} style={{marginTop: '5px'}}/></i>}
+						/>
+					</div>
+					<div style={{paddingBottom: '1em'}}>
+						<div style={{fontSize: 'small'}}>name</div>
+						<InputBond
+							bond={this.name}
+							placeholder='A name for this key'
+							validator={n => n ? secretStore().map(ss => ss.byName[n] ? null : n) : null}
+							action={<TransformBondButton
+								content='Create'
+								transform={(name, seed) => secretStore().submit(seed, name)}
+								args={[this.name, this.seed]}
+								immediate
+							/>}
+						/>
+					</div>
+					<div style={{paddingBottom: '1em'}}>
+						<WalletList/>
+					</div>
+				</Segment>
+				
+				<Segment padded>
+					<Header as='h2'>
+						<Icon name='search' />
+						<Header.Content>
+							Address Book
+							<Header.Subheader>Inspect the status of any account and name it for later use</Header.Subheader>
+						</Header.Content>
+					</Header>
+					<div style={{paddingBottom: '1em'}}>
+						<div style={{fontSize: 'small'}}>lookup account</div>
+						<AccountIdBond bond={this.lookup}/>
+						<If condition={this.lookup.ready()} then={<div>
+							<Label>Balance
+								<Label.Detail>
+									<Pretty value={runtime.balances.balance(this.lookup)}/>
+								</Label.Detail>
+							</Label>
+							<Label>Nonce
+								<Label.Detail>
+									<Pretty value={runtime.system.accountNonce(this.lookup)}/>
+								</Label.Detail>
+							</Label>
+							<Label>Address
+								<Label.Detail>
+									<Pretty value={this.lookup}/>
+								</Label.Detail>
+							</Label>
+						</div>}/>
+					</div>
+					<div style={{paddingBottom: '1em'}}>
+						<div style={{fontSize: 'small'}}>name</div>
+						<InputBond
+							bond={this.nick}
+							placeholder='A name for this address'
+							validator={n => n ? addressBook().map(ss => ss.byName[n] ? null : n) : null}
+							action={<TransformBondButton
+								content='Add'
+								transform={(name, account) => { addressBook().submit(account, name); return true }}
+								args={[this.nick, this.lookup]}
+								immediate
+							/>}
+						/>
+					</div>
+					<div style={{paddingBottom: '1em'}}>
+						<AddressBookList/>
+					</div>
+				</Segment>
+				
+				<Segment padded>
+					<Header as='h2'>
+						<Icon name='send' />
+						<Header.Content>
+							Send Funds
+							<Header.Subheader>Send funds from your account to another</Header.Subheader>
+						</Header.Content>
+					</Header>
+					<div style={{paddingBottom: '1em'}}>
+						<div style={{fontSize: 'small'}}>from</div>
+						<SignerBond bond={this.source}/>
+						<If condition={this.source.ready()} then={<span>
+							<Label>Balance
+								<Label.Detail>
+									<Pretty value={runtime.balances.balance(this.source)}/>
+								</Label.Detail>
+							</Label>
+							<Label>Nonce
+								<Label.Detail>
+									<Pretty value={runtime.system.accountNonce(this.source)}/>
+								</Label.Detail>
+							</Label>
+						</span>}/>
+					</div>
+					<div style={{paddingBottom: '1em'}}>
+						<div style={{fontSize: 'small'}}>to</div>
+						<AccountIdBond bond={this.destination}/>
+						<If condition={this.destination.ready()} then={
+							<Label>Balance
+								<Label.Detail>
+									<Pretty value={runtime.balances.balance(this.destination)}/>
+								</Label.Detail>
+							</Label>
+						}/>
+					</div>
+					<div style={{paddingBottom: '1em'}}>
+						<div style={{fontSize: 'small'}}>amount</div>
+						<BalanceBond bond={this.amount}/>
+					</div>
+					<TransactButton
+						content="Send"
+						icon='send'
+						tx={{
+							sender: runtime.indices.tryIndex(this.source),
+							call: calls.balances.transfer(this.destination, this.amount)
+						}}
 					/>
-				</div>
-				<div style={{paddingBottom: '1em'}}>
-					<div style={{fontSize: 'small'}}>name</div>
-					<InputBond
-						bond={this.name}
-						placeholder='A name for this key'
-						validator={n => n ? secretStore().map(ss => ss.byName[n] ? null : n) : null}
-						action={<TransformBondButton
-							content='Create'
-							transform={(name, seed) => secretStore().submit(seed, name)}
-							args={[this.name, this.seed]}
-							immediate
-						/>}
-					/>
-				</div>
-				<div style={{paddingBottom: '1em'}}>
-					<WalletList/>
-				</div>
-			</Segment>
-			
-			<Segment style={{margin: '1em'}} padded>
-				<Header as='h2'>
-					<Icon name='search' />
-					<Header.Content>
-						Address Book
-						<Header.Subheader>Inspect the status of any account and name it for later use</Header.Subheader>
-					</Header.Content>
-				</Header>
-  				<div style={{paddingBottom: '1em'}}>
-					<div style={{fontSize: 'small'}}>lookup account</div>
-					<AccountIdBond bond={this.lookup}/>
-					<If condition={this.lookup.ready()} then={<div>
-						<Label>Balance
-							<Label.Detail>
-								<Pretty value={runtime.balances.balance(this.lookup)}/>
-							</Label.Detail>
-						</Label>
-						<Label>Nonce
-							<Label.Detail>
-								<Pretty value={runtime.system.accountNonce(this.lookup)}/>
-							</Label.Detail>
-						</Label>
-						<Label>Address
-							<Label.Detail>
-								<Pretty value={this.lookup}/>
-							</Label.Detail>
-						</Label>
-					</div>}/>
-				</div>
-				<div style={{paddingBottom: '1em'}}>
-					<div style={{fontSize: 'small'}}>name</div>
-					<InputBond
-						bond={this.nick}
-						placeholder='A name for this address'
-						validator={n => n ? addressBook().map(ss => ss.byName[n] ? null : n) : null}
-						action={<TransformBondButton
-							content='Add'
-							transform={(name, account) => { addressBook().submit(account, name); return true }}
-							args={[this.nick, this.lookup]}
-							immediate
-						/>}
-					/>
-				</div>
-				<div style={{paddingBottom: '1em'}}>
-					<AddressBookList/>
-				</div>
-			</Segment>
-			
-			<Segment style={{margin: '1em'}} padded>
-				<Header as='h2'>
-					<Icon name='send' />
-					<Header.Content>
-						Send Funds
-						<Header.Subheader>Send funds from your account to another</Header.Subheader>
-					</Header.Content>
-				</Header>
-  				<div style={{paddingBottom: '1em'}}>
-					<div style={{fontSize: 'small'}}>from</div>
-					<SignerBond bond={this.source}/>
-					<If condition={this.source.ready()} then={<span>
-						<Label>Balance
-							<Label.Detail>
-								<Pretty value={runtime.balances.balance(this.source)}/>
-							</Label.Detail>
-						</Label>
-						<Label>Nonce
-							<Label.Detail>
-								<Pretty value={runtime.system.accountNonce(this.source)}/>
-							</Label.Detail>
-						</Label>
-					</span>}/>
-				</div>
-				<div style={{paddingBottom: '1em'}}>
-					<div style={{fontSize: 'small'}}>to</div>
-					<AccountIdBond bond={this.destination}/>
-					<If condition={this.destination.ready()} then={
-						<Label>Balance
-							<Label.Detail>
-								<Pretty value={runtime.balances.balance(this.destination)}/>
-							</Label.Detail>
-						</Label>
-					}/>
-				</div>
-				<div style={{paddingBottom: '1em'}}>
-					<div style={{fontSize: 'small'}}>amount</div>
-					<BalanceBond bond={this.amount}/>
-				</div>
-				<TransactButton
-					content="Send"
-					icon='send'
-					tx={{
-						sender: runtime.indices.tryIndex(this.source),
-						call: calls.balances.transfer(this.destination, this.amount)
-					}}
-				/>
-			</Segment>
-			
-			<Segment style={{margin: '1em'}} padded>
+				</Segment>
+				
+				<Segment padded>
 				<Header as='h2'>
 					<Icon name='search' />
 					<Header.Content>
@@ -241,6 +254,7 @@ export class App extends ReactiveComponent {
 					}}
 				/>
 			</Segment>
+			</div>}
 		</div>
 	</div>);
 	}
