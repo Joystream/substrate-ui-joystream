@@ -1,6 +1,44 @@
 // See https://github.com/paritytech/oo7/blob/master/packages/oo7-substrate/src/codec.js
-export const JoystreamTypes = {
-    ProposalId: 'u32',
+
+const u32 = 'u32'
+const u64 = 'u64'
+
+const BlockNumber = 'BlockNumber'
+const AccountId = 'AccountId'
+const Balance = 'Balance'
+const Hash = 'Hash'
+
+export const common = {
+    usize: u32,
+}
+
+export const module_elections = {
+    // Id: AccountId,
+    'Stake<Balance>': {
+        new: Balance,
+        transferred: Balance,
+    },
+    'SealedVote<AccountId, Stake, Hash, Vote>': {
+        voter: AccountId,
+        commitment: Hash,
+        stake: 'Stake',
+        vote: 'Option<AccountId>',
+    },
+    'ElectionStage<BlockNumber>': {
+        _enum: {
+            Announcing: BlockNumber,
+            Voting: BlockNumber,
+            Revealing: BlockNumber,
+        }
+    },
+    'TransferableStake<Balance>': {
+        seat: Balance,
+        backing: Balance,
+    },
+}
+
+export const module_proposals = {
+    ProposalId: u32,
     ProposalStatus: {
         _enum: [
             'Pending',
@@ -11,14 +49,14 @@ export const JoystreamTypes = {
             'Slashed',
         ]
     },
-    'Proposal<AccountId,Balance,BlockNumber>': {
+    'Proposal<AccountId, Balance, BlockNumber>': {
         id: 'ProposalId',
-        proposer: 'AccountId',
-        stake: 'Balance',
+        proposer: AccountId,
+        stake: Balance,
         name: 'Vec<u8>',
         description: 'Vec<u8>',
         wasm_code: 'Vec<u8>',
-        proposed_at: 'BlockNumber',
+        proposed_at: BlockNumber,
         status: 'ProposalStatus',
     },
     VoteKind: {
@@ -31,14 +69,20 @@ export const JoystreamTypes = {
     },
     'TallyResult<BlockNumber>': {
         proposal_id: 'ProposalId',
-        abstentions: 'u32',
-        approvals: 'u32',
-        rejections: 'u32',
-        slashes: 'u32',
+        abstentions: u32,
+        approvals: u32,
+        rejections: u32,
+        slashes: u32,
         status: 'ProposalStatus',
-        finalized_at: 'BlockNumber',
+        finalized_at: BlockNumber,
     },
-};
+}
+
+export const JoystreamTypes = Object.assign({},
+    common,
+    module_elections,
+    module_proposals,
+)
 
 /** Parity codec will not recognize a type properly if there are spaces in its name. */
 function removeSpaces(str) {
@@ -49,7 +93,7 @@ function removeSpaces(str) {
 export function registerJoystreamTypes() {
     Object.keys(JoystreamTypes).forEach((typeName) => {
         addCodecTransform(
-            removeSpaces(typeName), 
+            removeSpaces(typeName),
             removeSpaces(JoystreamTypes[typeName])
         );
     });
