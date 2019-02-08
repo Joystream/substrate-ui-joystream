@@ -11,15 +11,14 @@ import {BalanceBond} from './BalanceBond.jsx';
 import {InputBond} from './InputBond.jsx';
 import {TransactButton} from './TransactButton.jsx';
 import {FileUploadBond} from './FileUploadBond.jsx';
-import {StakingStatusLabel} from './StakingStatusLabel';
-import {WalletList, SecretItem} from './WalletList';
+import {WalletList} from './WalletList';
 import {AddressBookList} from './AddressBookList';
 import {TransformBondButton} from './TransformBondButton';
 import {Pretty} from './Pretty';
 
 import {registerJoystreamTypes} from './joystream-types';
-import {Menu} from './Menu';
-import {Proposals, NewProposal} from './Proposals';
+import {JoyMenu} from './Menu';
+import {Proposals, NewProposal, Election} from './Proposals';
 
 export class App extends ReactiveComponent {
 	constructor () {
@@ -50,7 +49,7 @@ export class App extends ReactiveComponent {
 	readyRender() {
 		return (
 	<div>
-		<Menu />
+		<JoyMenu />
 		<div className="ui main text container" style={{ margin: '4rem 0' }}>
 			<div>
 				{/* TODO move this info to menu */}
@@ -74,7 +73,19 @@ export class App extends ReactiveComponent {
 					}</Rspan>
 				</Label.Detail></Label>
 			</div>
-		
+
+			<div style={{marginTop: '3rem'}}>
+				<Header as='h2'>
+					<Icon name='address card outline' />
+					<Header.Content>
+						Election
+					</Header.Content>
+				</Header>
+				<Segment>
+					<Election/>
+				</Segment>
+			</div>
+
 			<div style={{marginTop: '3rem'}}>
 				<Header as='h2'>
 					<Icon name='cogs' />
@@ -82,7 +93,7 @@ export class App extends ReactiveComponent {
 						New Proposal
 					</Header.Content>
 				</Header>
-				<Segment style={{backgroundColor: '#fafafa'}}>
+				<Segment secondary>
 					<NewProposal/>
 				</Segment>
 			</div>
@@ -91,7 +102,7 @@ export class App extends ReactiveComponent {
 				<Header as='h2'>
 					<Icon name='cogs' />
 					<Header.Content>
-						Existing Proposals 
+						Existing Proposals
 						<Rspan> ({runtime.proposals.proposalCount})</Rspan>
 					</Header.Content>
 				</Header>
@@ -137,7 +148,7 @@ export class App extends ReactiveComponent {
 						<WalletList/>
 					</div>
 				</Segment>
-				
+
 				<Segment padded>
 					<Header as='h2'>
 						<Icon name='search' />
@@ -185,7 +196,7 @@ export class App extends ReactiveComponent {
 						<AddressBookList/>
 					</div>
 				</Segment>
-				
+
 				<Segment padded>
 					<Header as='h2'>
 						<Icon name='send' />
@@ -234,7 +245,7 @@ export class App extends ReactiveComponent {
 						}}
 					/>
 				</Segment>
-				
+
 				<Segment padded>
 				<Header as='h2'>
 					<Icon name='search' />
