@@ -1,3 +1,6 @@
+body {
+	background-color: #fcfcfc !important;
+}
 .validator-balances {
 	flex-direction: row;
 	flex-wrap: wrap;
