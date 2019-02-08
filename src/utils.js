@@ -17,7 +17,7 @@ export function hexToStr(h) {
 
 /** addr - Account address as a hex string. */
 export function shortAddr(addr) {
-    return addr.substring(0, 6) + '…' 
+    return addr.substring(0, 6) + '…'
         + addr.substring(addr.length - 4)
 }
 
@@ -51,7 +51,7 @@ export const nonEmptyStr = (x) =>
   isStr(x) && x.trim().length > 0
 
 export const parseNumStr = (num) => {
-    try { 
+    try {
         return parseInt(num)
     } catch (err) {
         return undefined
@@ -61,7 +61,22 @@ export const parseNumStr = (num) => {
 export const nonEmptyArr = (x) =>
   Array.isArray(x) && x.length > 0
 
-// For debug only:
+  // TODO rename to `myAccountId`
+export function myAccount() {
+  // TODO use Redux or React's Context instead:
+  let me = window.ME
+  return !me ? me : me.account
+}
+
+export function myAddress() {
+  // TODO use Redux or React's Context instead:
+  let me = window.ME
+  return !me ? me : me.address
+}
+
+// For debug in web dev console:
 window.strToHex = strToHex
 window.hexToStr = hexToStr
 window.shortAddr = shortAddr
+window.myAccount = myAccount
+window.myAddress = myAddress

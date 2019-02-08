@@ -1,0 +1,78 @@
+
+{
+    "Member1": {
+        "seed": "0x4d656d6265723120202020202020202020202020202020202020202020202020",
+        "pubkey": "0x80be3fb0fabf2c21b8738db8835ab31bc9e2c52c8ffb2ad165b680ee5fdf4f6b",
+        "address": "5EyWW5KG7wAD4AbTGYkaoCRKLjNom5znk8NyuG5mW97cWXtr"
+    },
+    "Member2": {
+        "seed": "0x4d656d6265723220202020202020202020202020202020202020202020202020",
+        "pubkey": "0xed55a3621beb21b8537b00ba4b3b2a87ddfe52d934f6c74e8604f0007c31c521",
+        "address": "5HRteQPLMW6RBKk8xkeUe9VbdyKZ2xnh77uu1zM4RAKTGyBX"
+    },
+    "Member3": {
+        "seed": "0x4d656d6265723320202020202020202020202020202020202020202020202020",
+        "pubkey": "0xbdaf316175079c3728f13219a6e692df7834727c738a043fe73aa81096b5e6d9",
+        "address": "5GMQx5qNdTh6intE8ciehFsHLew7okv9PsjwmTFi9bE8GJLe"
+    },
+    "Member4": {
+        "seed": "0x4d656d6265723420202020202020202020202020202020202020202020202020",
+        "pubkey": "0x43d9d24a46fbe20618a181261c69c3f859fef899e89ffdb28cc2814f1aea8cd6",
+        "address": "5DbfmizfFVvn816pCc8JNao6o55j7h8UdQsPF777fXczf4sX"
+    },
+    "Member5": {
+        "seed": "0x4d656d6265723520202020202020202020202020202020202020202020202020",
+        "pubkey": "0xea2d2de481a2dcbe63d6474525948980442740188c7cc0082dee06f94178e055",
+        "address": "5HMkUyq5oqqUqBJQ7mZ5ACPQABggQqUcfk8dfBkDesXH22Q9"
+    },
+    "Member6": {
+        "seed": "0x4d656d6265723620202020202020202020202020202020202020202020202020",
+        "pubkey": "0xf064d579078d97877906f063465993150931e855614d9e36aa90cf6f11dbb6c4",
+        "address": "5HVuJYvC3RYdijqGJVR895NJm57pA3qGLjBfcHM6NsJf89Ss"
+    },
+    "Member7": {
+        "seed": "0x4d656d6265723720202020202020202020202020202020202020202020202020",
+        "pubkey": "0x7f36eead809c08b6fd09e24d2282ef050ee8131e6c448f048f9377a4fd114ffc",
+        "address": "5EwWFrEFKY8E5frz7JJwisDwGvqMz7AibCGbb7s8hkFnCFVw"
+    },
+    "Member8": {
+        "seed": "0x4d656d6265723820202020202020202020202020202020202020202020202020",
+        "pubkey": "0xefb053faa5d683e7f8396a3194b0dd801bc7e82ffdf03b1944bcf5b226ef497f",
+        "address": "5HUygWR7VTzLmPHHktAfKCunQ2XRKCq44cMsXuLjLgBnRrRT"
+    },
+    "Member9": {
+        "seed": "0x4d656d6265723920202020202020202020202020202020202020202020202020",
+        "pubkey": "0x313d9239cb65b247cf75b1d3b19422e0d3b1cd6f80251df0047e247215cf4bd8",
+        "address": "5DBGVbzKjMRUZs98caFKBrTS7B6xVjvXAoeSippQ64F7SLEX"
+    },
+    "Member10": {
+        "seed": "0x4d656d6265723130202020202020202020202020202020202020202020202020",
+        "pubkey": "0xc3f20906288880cbf631074ab755540b76ed42b94896bf9c332316fa636634ca",
+        "address": "5GVd6R2SDW2D679Jj5MHDFAc8RXo7bMoJuLxq5GZPacUvdui"
+    },
+    "Member11": {
+        "seed": "0x4d656d6265723131202020202020202020202020202020202020202020202020",
+        "pubkey": "0x5c1b75a56ba1039132bfbdff1a46ed1c520852ee26d3dd9c986837816544dcc3",
+        "address": "5E9URJGwkXE1ygUG3JqHC1LzaKkiQ9RabkeTBrNYqScPtzuR"
+    },
+    "Member12": {
+        "seed": "0x4d656d6265723132202020202020202020202020202020202020202020202020",
+        "pubkey": "0x95fb9a639985fc04b54f462272d417699e6d2d2f8c9551ad3292a6a39d73c098",
+        "address": "5FTMjWT2RGBKmLgKVEASxHBfpp7caF3oufh2AnZMEMb76xcx"
+    },
+    "Member13": {
+        "seed": "0x4d656d6265723133202020202020202020202020202020202020202020202020",
+        "pubkey": "0x79e359b9822f9eb40fbb1795b6fa33f5cb636d27823bb51637553901cac8723a",
+        "address": "5EpXBt4xKZZzxq7tWkJCRGjzfKLCVqzjjH6FW5M2mCxsZagH"
+    },
+    "Member14": {
+        "seed": "0x4d656d6265723134202020202020202020202020202020202020202020202020",
+        "pubkey": "0x2dd38e6adeb1aacf95ed49b7bcc8f2113242a6a5c7e08440ac34963b45ca294b",
+        "address": "5D6nrgJAfzeGntuKoREwh6ZQfYQBv4KhTZ4JUkvHWhPC6gCp"
+    },
+    "Member15": {
+        "seed": "0x4d656d6265723135202020202020202020202020202020202020202020202020",
+        "pubkey": "0x801f17ac12530c29a2dd93bd931779d92b3bfd21a74d4a8825439286c774e587",
+        "address": "5ExhDsjgb22JVehfBuA9czCJCuj9G564zT73BXNRgo1f1JQy"
+    }
+}
